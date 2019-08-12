@@ -15,7 +15,6 @@ REPOSITORY_DIRECTORY = "/Users/kholub/MediocreAmateur"
 def get_all_videos_in_channel(channel_id):
     first_url = '{}?key={}&channelId={}&part=snippet,id&order=date&maxResults=25'.format(API_ENDPOINT, API_KEY,
                                                                                          channel_id)
-
     videos = []
     url = first_url
     while True:
