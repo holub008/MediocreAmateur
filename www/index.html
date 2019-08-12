@@ -19,7 +19,27 @@
             .addTo(adventures_map);
 
         function buildDescription(adventure){
-            return 'TODO';
+            if (adventure.amateurs && adventure.distance && adventure.mode) {
+                console.log(adventure.amateurs);
+                let prefix;
+                if (adventure.amateurs.length === 1) {
+                    prefix = `${adventure.amateurs[0]} ${adventure.mode}s`;
+                }
+                else if (adventure.amateurs.length === 2) {
+                    prefix = `${adventure.amateurs[0]} and ${adventure.amateurs[1]} ${adventure.mode}`;
+                }
+                else {
+                    const amateurList = `${adventure.amateurs.slice(0,adventure.amateurs.length - 1).join(',')} and ${adventure.amateurs[adventure.amateurs.length - 1]}`;
+                    prefix = `${amateurList} ${adventure.mode}`;
+                }
+
+                return `${prefix} ${adventure.distance} miles.`;
+            }
+            else {
+                // use the youtube description
+                return adventure.description;
+            }
+
         }
 
         fetch('/adventures.json')
@@ -34,10 +54,10 @@
                         <a href="${`https://www.youtube.com/watch?v=${a.id}`}">
                             <img src="${`/images/${a.id}.jpg`}" style="width:150px;height:100px;"/>
                         </a>
-                        ${a.strava_link ? `<a href="${a.strava_link}">Strava Link</a>` : ""}
+                        ${a.strava_link ? `<br/><a href="${a.strava_link}">Strava Link</a>` : ""}
                     `);
-                })
-            })
+                });
+            });
         const marker = L.marker([40.2548, -105.6159]).addTo(adventures_map);
 
 

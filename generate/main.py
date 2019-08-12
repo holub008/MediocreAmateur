@@ -100,7 +100,10 @@ def write_www_content_file(video_content,
         row = {}
         for col in json_columns:
             if not pd.isnull(video[col]):
-                row[col] = video[col]
+                if col == 'amateurs':
+                    row[col] = video[col].split(',')
+                else:
+                    row[col] = video[col]
 
         rows.append(row)
 
