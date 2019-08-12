@@ -37,14 +37,14 @@ def video_to_row(video):
         video_id = video['id']['videoId']
         image = video['snippet']['thumbnails']['high']['url']
         title = video['snippet']['title']
-        description = video['id']['videoId']
+        description = video['snippet']['description']
         publish_date = video['snippet']['publishedAt']
 
         return video_id, image, title, description, publish_date
     return None
 
 
-def write_content_file(videos_df,
+def write_generate_content_file(videos_df,
                        append=True,
                        location=REPOSITORY_DIRECTORY + "/generate/adventures.csv"):
     """
@@ -53,7 +53,6 @@ def write_content_file(videos_df,
     :param location: filepath to the content file
     :return: None
     """
-    videos_df['youtube_url'] = ['https://www.youtube.com/watch?v=%s' % (v['id'],) for _,v in videos_df.iterrows()]
     videos_df['strava_link'] = None
     videos_df['amateurs'] = None
     videos_df['mode'] = None
@@ -76,7 +75,6 @@ def read_content_file(location=REPOSITORY_DIRECTORY + "/generate/adventures.csv"
     return pd.read_csv(location)
 
 
-
 def fetch_images(videos_df,
                  append=True,
                  location=REPOSITORY_DIRECTORY + "/www/images"):
@@ -89,15 +87,36 @@ def fetch_images(videos_df,
                     handle.write(resp.content)
 
 
+def write_www_content_file(video_content,
+                           location=REPOSITORY_DIRECTORY + '/www/adventures.json'):
+    """
+    convert a dataframe to json to be served
+    :param video_content a dataframe with the usual columns
+    """
+    rows = []
+    json_columns = ['id', 'title', 'description', 'publish_date', 'strava_link', 'amateurs', 'mode',
+                    'distance', 'latitude', 'longitude']
+    for _, video in video_content.iterrows():
+        row = {}
+        for col in json_columns:
+            if not pd.isnull(video[col]):
+                row[col] = video[col]
+
+        rows.append(row)
+
+    with open(location, 'w') as f:
+        json.dump(rows, f)
+
 
 if __name__ == '__main__':
     all_videos = get_all_videos_in_channel('UC-04mJDJUYHEyE8JPIEa0-w')
     parsed_videos = [video_to_row(v) for v in all_videos]
     videos_df = pd.DataFrame([v for v in parsed_videos if v],
                              columns=['id', 'image', 'title', 'description', 'publish_date'])
-    write_content_file(videos_df)
+    write_generate_content_file(videos_df)
     # after some hand entry:
     video_content = read_content_file()
     fetch_images(video_content)
+    write_www_content_file(video_content)
 
 
