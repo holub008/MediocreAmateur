@@ -6,9 +6,24 @@
         <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
                 integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
                 crossorigin=""></script>
+        <style>
+            @font-face {
+                font-family: 'dosis';
+                src: URL('/dosis.ttf') format('truetype');
+            }
+        </style>
+        <title>Mediocre Amateur</title>
     </head>
     <body>
-        <div id="adventures_map" style="height: 70vh; width: 80vw"></div>
+        <h1 style="font-family: dosis; margin: 5px 5px 5px 5px;">Mediocre Amateur</h1>
+        <h3 style="font-family: dosis; margin: 5px 5px 5px 5px;">Click a tag to view a mediocre adventure:</h3>
+        <div id="adventures_map" style="height: 85vh; width: 95vw; margin: auto;"></div>
+        <div style="text-align:center;">
+            <a href="https://www.youtube.com/channel/UC-04mJDJUYHEyE8JPIEa0-w" style="font-family: dosis;">
+                Mediocre Amateur on YouTube</a> |
+            <a href="https://github.com/holub008/MediocreAmateur" style="font-family: dosis;">
+                Project on GitHub</a>
+        </div>
     </body>
     <script>
         const adventures_map = L.map('adventures_map').setView([42, -115], 5);
@@ -20,7 +35,6 @@
 
         function buildDescription(adventure){
             if (adventure.amateurs && adventure.distance && adventure.mode) {
-                console.log(adventure.amateurs);
                 let prefix;
                 if (adventure.amateurs.length === 1) {
                     prefix = `${adventure.amateurs[0]} ${adventure.mode}s`;
@@ -45,21 +59,21 @@
         fetch('/adventures.json')
             .then(r => r.json())
             .then(adventures => {
-                adventures.forEach(a => {
+                adventures
+                    .filter(a => !!a.latitude)
+                    .forEach(a => {
                     const marker = L.marker([a.latitude, a.longitude]).addTo(adventures_map);
                     marker.bindPopup(`
                         <b>${a.title}</b>
                         <br/>
                         <p>${buildDescription(a)}</p>
                         <a href="${`https://www.youtube.com/watch?v=${a.id}`}">
-                            <img src="${`/images/${a.id}.jpg`}" style="width:150px;height:100px;"/>
-                        </a>
-                        ${a.strava_link ? `<br/><a href="${a.strava_link}">Strava Link</a>` : ""}
+                            <img src="${`/images/${a.id}.jpg`}" style="width:150px;height:100px;"/></a>
+                        <br/>
+                        <a href="${`https://www.youtube.com/watch?v=${a.id}`}">YouTube Link</a>
+                        ${a.strava_link ? `&nbsp;| <a href="${a.strava_link}">Strava Link</a>` : ""}
                     `);
                 });
             });
-        const marker = L.marker([40.2548, -105.6159]).addTo(adventures_map);
-
-
     </script>
 </html>
