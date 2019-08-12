@@ -1,0 +1,13 @@
+{
+  "name": "mediocre_amateur_server",
+  "version": "1.0.0",
+  "description": "A development server for Mediocre Amateur",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Karl Holub <karljholub@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
