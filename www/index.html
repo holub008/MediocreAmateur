@@ -11,15 +11,18 @@
                 font-family: 'dosis';
                 src: URL('/dosis.ttf') format('truetype');
             }
+            * {
+                font-family: dosis;
+            }
         </style>
         <title>Mediocre Amateur</title>
     </head>
     <body>
-        <h1 style="font-family: dosis; margin: 5px;">Mediocre Amateur</h1>
-        <h3 style="font-family: dosis; margin: 5px;">Click a tag to view a mediocre adventure:</h3>
+        <h1 style="margin: 5px;">Mediocre Amateur</h1>
+        <h3 style="margin: 5px;">Click a tag to view a mediocre adventure:</h3>
         <div id="adventures_map" style="height: 85vh; width: 95vw; margin: auto;"></div>
         <div style="text-align:center;">
-            <a href="https://www.youtube.com/channel/UC-04mJDJUYHEyE8JPIEa0-w" style="font-family: dosis;">
+            <a href="https://www.youtube.com/channel/UC-04mJDJUYHEyE8JPIEa0-w">
                 Mediocre Amateur on YouTube</a> |
             <a href="https://github.com/holub008/MediocreAmateur" style="font-family: dosis;">
                 Project on GitHub</a>
@@ -38,7 +41,7 @@
         legend.onAdd = (map) => {
             const div = L.DomUtil.create('div', 'info legend');
             div.innerHTML = `
-                <table style="border-collapse: collapse;border-spacing: 0;font-family: dosis; background-color: #FFFFFF">
+                <table style="border-collapse: collapse;border-spacing: 0; background-color: #FFFFFF">
                     <tr>
                         <td style="background-color: #407BBF; padding:10px 5px;"></td>
                         <td>run</td>
@@ -112,7 +115,7 @@
                     prefix = `${amateurList} ${adventure.mode}`;
                 }
 
-                return `${prefix} ${adventure.distance} miles.`;
+                return `${prefix} ${Math.round(adventure.distance)} miles.`;
             }
             else {
                 // use the youtube description
