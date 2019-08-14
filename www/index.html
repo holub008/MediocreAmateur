@@ -115,7 +115,8 @@
                     prefix = `${amateurList} ${adventure.mode}`;
                 }
 
-                return `${prefix} ${Math.round(adventure.distance)} miles.`;
+                const parsedDistance = Math.round(adventure.distance);
+                return `${prefix} ${parsedDistance ? parsedDistance : adventure.distance} miles.`;
             }
             else {
                 // use the youtube description
