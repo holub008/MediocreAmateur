@@ -15,8 +15,8 @@
         <title>Mediocre Amateur</title>
     </head>
     <body>
-        <h1 style="font-family: dosis; margin: 5px 5px 5px 5px;">Mediocre Amateur</h1>
-        <h3 style="font-family: dosis; margin: 5px 5px 5px 5px;">Click a tag to view a mediocre adventure:</h3>
+        <h1 style="font-family: dosis; margin: 5px;">Mediocre Amateur</h1>
+        <h3 style="font-family: dosis; margin: 5px;">Click a tag to view a mediocre adventure:</h3>
         <div id="adventures_map" style="height: 85vh; width: 95vw; margin: auto;"></div>
         <div style="text-align:center;">
             <a href="https://www.youtube.com/channel/UC-04mJDJUYHEyE8JPIEa0-w" style="font-family: dosis;">
@@ -26,12 +26,77 @@
         </div>
     </body>
     <script>
-        const adventures_map = L.map('adventures_map').setView([42, -115], 5);
+        const adventuresMap = L.map('adventures_map').setView([42, -115], 5);
+
         L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
             maxZoom: 17,
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://opentopomap.org">OpenTopoMap</a>'
         })
-            .addTo(adventures_map);
+            .addTo(adventuresMap);
+
+        const legend = L.control({position: 'bottomleft'});
+        legend.onAdd = (map) => {
+            const div = L.DomUtil.create('div', 'info legend');
+            div.innerHTML = `
+                <table style="border-collapse: collapse;border-spacing: 0;font-family: dosis; background-color: #FFFFFF">
+                    <tr>
+                        <td style="background-color: #407BBF; padding:10px 5px;"></td>
+                        <td>run</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #54A73D; padding:10px 5px;"></td>
+                        <td>ski</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#000000; padding:10px 5px;"></td>
+                        <td>other</td>
+                    </tr>
+                </table>
+            `;
+
+            return div;
+        };
+
+        legend.addTo(adventuresMap);
+
+        function insertMarker(lat, lon, map, mode) {
+            let icon;
+            if (mode === 'run') {
+                icon = new L.Icon({
+                    iconUrl: '/markers/blue.png',
+                    shadowUrl: '/markers/shadow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41]
+                });
+            }
+            else if (mode === 'ski') {
+                icon = new L.Icon({
+                    iconUrl: '/markers/green.png',
+                    shadowUrl: '/markers/shadow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41]
+                });
+            }
+            else {
+                icon = new L.Icon({
+                    iconUrl: '/markers/black.png',
+                    shadowUrl: '/markers/shadow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41]
+                });
+            }
+
+            const marker = L.marker([lat, lon], {icon: icon});
+            marker.addTo(map);
+
+            return marker;
+        }
 
         function buildDescription(adventure){
             if (adventure.amateurs && adventure.distance && adventure.mode) {
@@ -62,7 +127,7 @@
                 adventures
                     .filter(a => !!a.latitude)
                     .forEach(a => {
-                    const marker = L.marker([a.latitude, a.longitude]).addTo(adventures_map);
+                    const marker = insertMarker( a.latitude, a.longitude, adventuresMap, a.mode);
                     marker.bindPopup(`
                         <b>${a.title}</b>
                         <br/>
