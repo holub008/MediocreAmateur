@@ -60,12 +60,13 @@ def write_generate_content_file(videos_df,
     videos_df['longitude'] = None
 
     if os.path.exists(location) and append:
-        existing_videos = pd.read_csv(location)
-        joined_videos = videos_df.merge(existing_videos, how="outer", on='id', indicator=True)
-        videos_for_write = videos_df.merge(joined_videos[joined_videos['_merge'] == 'left_only'],
-                                           how='inner', on='id')
+        existing_videos = pd.read_csv(location, index_col=0)
+        joined_videos = videos_df.merge(existing_videos[['id']], how="outer", on='id', indicator=True)
+        new_videos = joined_videos[joined_videos['_merge'] == 'left_only'].drop('_merge', axis='columns')
+
+        videos_for_write = pd.concat([new_videos, existing_videos])
         if videos_for_write.shape[0] > 0:
-            videos_for_write.to_csv(location, mode='a', header=existing_videos.shape[0] == 0)
+            videos_for_write.to_csv(location)
     elif videos_df.shape[0] > 0:
         videos_df.to_csv(location)
 
