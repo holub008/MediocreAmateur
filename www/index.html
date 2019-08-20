@@ -23,17 +23,16 @@
             .header-text {
                 margin-top: 0px;
                 margin-bottom: 0px;
-                margin-left: 5px;
+                margin-left: 2%;
             }
 
             #grid-container {
                 height: 100vh;
                 width: 100vw;
                 display: grid;
-                margin-top: 0px;
                 grid-template-columns: 1fr 1fr 1fr;
                 grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-                grid-template-areas: "title . logo" "map map map" "map map map" "map map map" "map map map" "map map map" "map map map" "map map map" "map map map" "map map map" "about about about";
+                grid-template-areas: "title logo about" "map map map" "map map map" "map map map" "map map map" "map map map" "map map map" "map map map" "map map map" "map map map" "footer footer footer";
             }
 
             #title {
@@ -47,12 +46,17 @@
             #map {
                 grid-area: map;
                 width: 95%;
-                height: 100%;
+                height: 98%;
                 margin: auto;
             }
 
             #about {
                 grid-area: about;
+                text-align: center;
+            }
+
+            #footer {
+                grid-area: footer;
                 text-align: center;
             }
         </style>
@@ -62,17 +66,19 @@
         <div id="grid-container">
             <div id="title">
                 <h1 class="header-text">Mediocre Amateur</h1>
-                <h3 class="header-text">Click a tag to view a mediocre adventure:</h3>
+                <h3 class="header-text" style="margin-top: 2%">Click a tag to view a mediocre adventure:</h3>
             </div>
             <div id="logo">
                 <img src="/black_on_white_logo.png" height="100%" style="margin: auto; display:block;"/>
             </div>
             <div id="map"></div>
-            <div id="about">
-                <a href="https://www.youtube.com/channel/UC-04mJDJUYHEyE8JPIEa0-w">
-                    Mediocre Amateur on YouTube</a> |
-                <a href="/about">
-                    About</a>
+            <div id="footer" style="font-size: 120%;">
+                <p>
+                    <a href="https://www.youtube.com/channel/UC-04mJDJUYHEyE8JPIEa0-w">
+                        Mediocre Amateur on YouTube</a> |
+                    <a href="/about">
+                        About</a>
+                </p>
             </div>
         </div>
     </body>
