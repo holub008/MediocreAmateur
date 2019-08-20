@@ -14,25 +14,70 @@
             * {
                 font-family: dosis;
             }
+
+            body {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .header-text {
+                margin-top: 0px;
+                margin-bottom: 0px;
+                margin-left: 5px;
+            }
+
+            #grid-container {
+                height: 100vh;
+                width: 100vw;
+                display: grid;
+                margin-top: 0px;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+                grid-template-areas: "title . logo" "map map map" "map map map" "map map map" "map map map" "map map map" "map map map" "map map map" "map map map" "map map map" "about about about";
+            }
+
+            #title {
+                grid-area: title;
+            }
+
+            #logo {
+                grid-area: logo;
+            }
+
+            #map {
+                grid-area: map;
+                width: 95%;
+                height: 100%;
+                margin: auto;
+            }
+
+            #about {
+                grid-area: about;
+                text-align: center;
+            }
         </style>
         <title>Mediocre Amateur</title>
     </head>
     <body>
-        <div>
-            <h1 style="margin: 5px;" style="float: left">Mediocre Amateur</h1>
-
-        </div>
-        <h3 style="margin: 5px;">Click a tag to view a mediocre adventure:</h3>
-        <div id="adventures_map" style="height: 85vh; width: 95vw; margin: auto;"></div>
-        <div style="text-align:center;">
-            <a href="https://www.youtube.com/channel/UC-04mJDJUYHEyE8JPIEa0-w">
-                Mediocre Amateur on YouTube</a> |
-            <a href="/about">
-                About</a>
+        <div id="grid-container">
+            <div id="title">
+                <h1 class="header-text">Mediocre Amateur</h1>
+                <h3 class="header-text">Click a tag to view a mediocre adventure:</h3>
+            </div>
+            <div id="logo">
+                <img src="/black_on_white_logo.png" height="100%" style="margin: auto; display:block;"/>
+            </div>
+            <div id="map"></div>
+            <div id="about">
+                <a href="https://www.youtube.com/channel/UC-04mJDJUYHEyE8JPIEa0-w">
+                    Mediocre Amateur on YouTube</a> |
+                <a href="/about">
+                    About</a>
+            </div>
         </div>
     </body>
     <script>
-        const adventuresMap = L.map('adventures_map').setView([42, -115], 5);
+        const adventuresMap = L.map('map').setView([42, -115], 5);
 
         L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
             maxZoom: 17,
