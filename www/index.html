@@ -50,11 +50,6 @@
                 margin: auto;
             }
 
-            #about {
-                grid-area: about;
-                text-align: center;
-            }
-
             #footer {
                 grid-area: footer;
                 text-align: center;
@@ -65,8 +60,6 @@
     <body>
         <div id="grid-container">
             <div id="title">
-                <h1 class="header-text">Mediocre Amateur</h1>
-                <h3 class="header-text" style="margin-top: 2%">Click a tag to view a mediocre adventure:</h3>
             </div>
             <div id="logo">
                 <img src="/black_on_white_logo.png" height="100%" style="margin: auto; display:block;"/>
@@ -187,14 +180,15 @@
                     .forEach(a => {
                     const marker = insertMarker( a.latitude, a.longitude, adventuresMap, a.mode);
                     marker.bindPopup(`
-                        <b>${a.title}</b>
-                        <br/>
-                        <p>${buildDescription(a)}</p>
-                        <a href="${`https://www.youtube.com/watch?v=${a.id}`}">
-                            <img src="${`/images/${a.id}.jpg`}" style="width:150px;height:100px;"/></a>
-                        <br/>
-                        <a href="${`https://www.youtube.com/watch?v=${a.id}`}">YouTube Link</a>
-                        ${a.strava_link ? `&nbsp;| <a href="${a.strava_link}">Strava Link</a>` : ""}
+                        <div style="font-size: 130%;">
+                            <h3>${a.title}</h3>
+                            <p>${buildDescription(a)}</p>
+                            <a href="${`https://www.youtube.com/watch?v=${a.id}`}">
+                                 <img src="${`/images/${a.id}.jpg`}" style="width:200px;height:133px;"/></a>
+                            <br/>
+                            <a href="${`https://www.youtube.com/watch?v=${a.id}`}">YouTube Link</a>
+                            ${a.strava_link ? `&nbsp;| <a href="${a.strava_link}">Strava Link</a>` : ""}
+                        </div>
                     `);
                 });
             });
