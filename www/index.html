@@ -24,9 +24,9 @@
                 height: 100%;
                 width: 100%;
                 display: grid;
-                grid-template-columns: 1fr 1fr 1fr;
-                grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-                grid-template-areas: "title logo about" "map map map" "map map map" "map map map" "map map map" "map map map" "map map map" "map map map" "map map map" "map map map" "footer footer footer";
+                grid-template-columns: 1fr;
+                grid-template-rows: 50px 75% calc(25% - 50px);
+                grid-template-areas: "logo" "map" "bout";
             }
 
             #title {
@@ -43,11 +43,6 @@
                 height: 98%;
                 margin: auto;
             }
-
-            #footer {
-                grid-area: footer;
-                text-align: center;
-            }
         </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Where are the Mediocre Amateurs?">
@@ -56,16 +51,25 @@
     <body>
         <div id="grid-container">
             <div id="logo">
-                <img src="/black_on_white_logo.png" height="100px" style="margin: auto; display:block;"/>
+                <img src="/black_on_white_logo.png" height="50px" style="margin: auto; display:block; padding-top: 3px"/>
             </div>
             <div id="map"></div>
-            <div id="footer" style="font-size: 120%;">
-                <p>
-                    <a href="https://www.youtube.com/channel/UC-04mJDJUYHEyE8JPIEa0-w">
-                        Mediocre Amateur on YouTube</a> |
-                    <a href="/about">
-                        About</a>
+            <div id="about" style="padding: 0 2.5%; display: flex; flex-direction: row; justify-content: center;">
+                <p style="max-width: 800px;">
+                    What is Mediocre Amateur? It's a show by amateurs for amateurs created by Danny and Blake in hopes of motivating
+                    people to get out there and see the world. Don't let your lack of experience hinder your thirst for adventure.
+                    Watch and be inspired knowing that even those who are more experienced are still just amateurs and ignore
+                    all those sneering experts who cling to their epistemic arrogance like Gollum clinging to his precious.
+                    Trail running, hiking, climbing, skiing, and travel we're not experts we're amateurs.
                 </p>
+                <div style="width: 100%; text-align: center;">
+                    <p>
+                        <a href="https://www.youtube.com/channel/UC-04mJDJUYHEyE8JPIEa0-w">
+                            On YouTube</a> |
+                        <a href="/about">
+                            About</a>
+                    </p>
+                </div>
             </div>
         </div>
     </body>
