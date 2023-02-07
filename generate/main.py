@@ -4,9 +4,6 @@ import os
 import pandas as pd
 import requests
 
-if 'GOOGLE_API_KEY' not in os.environ:
-    raise EnvironmentError('Need to set GOOGLE_API_KEY to run this script')
-
 API_KEY = os.environ['GOOGLE_API_KEY']
 API_ENDPOINT = 'https://www.googleapis.com/youtube/v3/search'
 REPOSITORY_DIRECTORY = "/Users/kholub/MediocreAmateur"
@@ -112,11 +109,6 @@ def write_www_content_file(video_content,
 
 
 if __name__ == '__main__':
-    all_videos = get_all_videos_in_channel('UC-04mJDJUYHEyE8JPIEa0-w')
-    parsed_videos = [video_to_row(v) for v in all_videos]
-    videos_df = pd.DataFrame([v for v in parsed_videos if v],
-                             columns=['id', 'image', 'title', 'description', 'publish_date'])
-    write_generate_content_file(videos_df)
     # after some hand entry:
     video_content = read_content_file()
     fetch_images(video_content)
